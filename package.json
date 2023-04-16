@@ -1,0 +1,24 @@
+{
+  "name": "gpt-cli-node",
+  "version": "1.0.0",
+  "description": "gpt node-cli client",
+  "type": "module",
+  "main": "index.js",
+  "bin": "./bin/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anjumann/gpt-cli-node.git"
+  },
+  "author": "anjuman",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anjumann/gpt-cli-node/issues"
+  },
+  "homepage": "https://github.com/anjumann/gpt-cli-node#readme",
+  "dependencies": {
+    "inquirer": "^9.1.5"
+  }
+}
