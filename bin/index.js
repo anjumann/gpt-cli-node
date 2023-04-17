@@ -1,8 +1,19 @@
 import fs from 'fs';
 import inquirer from 'inquirer';
 import { Configuration, OpenAIApi } from 'openai';
-import chalk from 'chalk';
+import readline from 'readline';
 import { changeApiKey, changeSetting, showConfig, setting_config, apiKey } from './utils/index.js';
+
+// import chalk from 'chalk';
+
+// Set up readline interface for command-line input/output
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
+const {model,maxTokens, temperature  ,topP, frequencyPenalty, presencePenalty  } = setting_config;
+
 
 // Load configuration from config & setting json file
 let config = {};
@@ -54,14 +65,25 @@ async function prompt() {
 }
 
 // function to generate chatbot response using OpenAI's GPT-3 language model
+async function generateResponse(message) {
+  // Create a completion request
+  const response = await openai.createChatCompletion({
+    model: model,
+    messages: message,
+    maxTokens: maxTokens,
+    temperature: temperature,
+    topP: topP,
+    frequencyPenalty: frequencyPenalty,
+    presencePenalty: presencePenalty
+  });
+  return response.data.choices[0].message.content;
+}
 
 // Chat with OpenAI API
 async function chat() {
   let prompt = '';
 
-  if (setting.config) {
-    setting = setting.config;
-  } else {
+  if (!setting_config ) {
     console.log('Please set your setting first (Can be updated anytime).');
     await changeSetting()
   }
@@ -69,7 +91,23 @@ async function chat() {
     console.log('Please set your OpenAI API key first (Can be updated anytime).');
     await changeApiKey()
   }
+  while (true) {
+    let message = []
+    const input = await new Promise(resolve => {
+      rl.question('> ', resolve)
+    });
 
+    if (input === 'exit') {
+      exit(0);
+    }
+
+    message.push({ role: "system", content: "answer as concisely as possible. act like chatgpt " })
+    message.push({ role: "user", content: input })
+    const response = await generateResponse(message);
+    message.push({ role: "system", content: response })
+
+    console.log(`Bot:\n ${response}`);
+  }
 
 
 }
@@ -77,3 +115,5 @@ async function chat() {
 
 // Start the CLI application
 prompt();
+
+export {prompt};

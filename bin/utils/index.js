@@ -1,7 +1,7 @@
 import fs from 'fs';
 import inquirer from 'inquirer';
 import chalk from 'chalk';
-
+import {prompt} from '../index.js';
 
 let config = {};
 let setting = {};
@@ -25,6 +25,8 @@ async function changeApiKey() {
 
     fs.writeFileSync('config.json', JSON.stringify(config));
     console.log('Config saved!');
+    prompt();
+
 }
 
 // change default setting in setting.json
@@ -67,18 +69,21 @@ async function changeSetting() {
             default: 0.0,
         },
     ])
-    console.log(answer);
+    // console.log(answer);
     setting = answer;
     fs.writeFileSync('setting.json', JSON.stringify(setting));
+
+    prompt();
 }
 
 async function showConfig() {
     console.log('Current config: ', config);
     console.log('Current setting: ', setting);
-
+    prompt();
 }
 
 const apiKey = config.openai_api_key;
 const setting_config = setting;
+// console.log(setting_config);
 
 export { changeApiKey, changeSetting, showConfig, apiKey, setting_config, setting };
