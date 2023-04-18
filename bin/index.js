@@ -81,8 +81,7 @@ async function generateResponse(message) {
 
 // Chat with OpenAI API
 async function chat() {
-  let prompt = '';
-
+  
   if (!setting_config ) {
     console.log('Please set your setting first (Can be updated anytime).');
     await changeSetting()
@@ -91,23 +90,25 @@ async function chat() {
     console.log('Please set your OpenAI API key first (Can be updated anytime).');
     await changeApiKey()
   }
-  while (true) {
-    let message = []
-    const input = await new Promise(resolve => {
-      rl.question('> ', resolve)
-    });
 
-    if (input === 'exit') {
-      exit(0);
-    }
+  // let prompt = '';
+  // while (true) {
+  //   let message = []
+  //   const input = await new Promise(resolve => {
+  //     rl.question('> ', resolve)
+  //   });
 
-    message.push({ role: "system", content: "answer as concisely as possible. act like chatgpt " })
-    message.push({ role: "user", content: input })
-    const response = await generateResponse(message);
-    message.push({ role: "system", content: response })
+  //   if (input === 'exit') {
+  //     exit(0);
+  //   }
 
-    console.log(`Bot:\n ${response}`);
-  }
+  //   message.push({ role: "system", content: "answer as concisely as possible. act like chatgpt " })
+  //   message.push({ role: "user", content: input })
+  //   const response = await generateResponse(message);
+  //   message.push({ role: "system", content: response })
+
+  //   console.log(`Bot:\n ${response}`);
+  // }
 
 
 }
