@@ -82,14 +82,14 @@ async function generateResponse(message) {
 // Chat with OpenAI API
 async function chat() {
   
-  if (!setting_config ) {
-    console.log('Please set your setting first (Can be updated anytime).');
-    await changeSetting()
-  }
-  if (!apiKey) {
-    console.log('Please set your OpenAI API key first (Can be updated anytime).');
-    await changeApiKey()
-  }
+  // if (!setting_config ) {
+  //   console.log('Please set your setting first (Can be updated anytime).');
+  //   await changeSetting()
+  // }
+  // if (!apiKey) {
+  //   console.log('Please set your OpenAI API key first (Can be updated anytime).');
+  //   await changeApiKey()
+  // }
 
   // let prompt = '';
   // while (true) {
@@ -109,8 +109,7 @@ async function chat() {
 
   //   console.log(`Bot:\n ${response}`);
   // }
-
-
+  console.log('Chatting with OpenAI API');
 }
 
 
